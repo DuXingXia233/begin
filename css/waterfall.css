@@ -1,0 +1,25 @@
+.waterfall {
+	position: relative;
+	background-color: #ccc;
+
+}
+.waterfall .box {
+
+	padding: 5px;
+	width: auto;
+	
+	position: absolute;
+
+}
+.waterfall .box .pic {
+	padding: 5px;
+
+	border: 1px solid blue;
+	border-radius: 5px;
+	box-shadow: 0 0 1px blue;
+}
+
+.waterfall .box .pic img {
+	width: 150px;
+	height: auto;
+}

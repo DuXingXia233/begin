@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>move_follow mouse</title>
+<style>
+	* {
+		margin:0;
+		padding: 0;
+	}
+	body {
+
+		overflow: hidden;
+	}
+	.temp {
+		position: absolute;
+		border: 1px dashed #000;
+	}
+	#follow {
+		position: absolute;
+		width: 200px;
+		height: 250px;
+		background-color: #ccc;
+	}
+</style>
+
+	<script type='text/javascript' src='js/common.js'></script>
+	<script>
+	window.onload = function() {
+		var oDiv = document.getElementById('follow');
+		var Width = document.body.clientWidth || document.documentElement.clientWidth;
+		var Height = document.body.clientHeight || document.documentElement.clientHeight;
+		var disX = 0;
+		var disY = 0;
+
+
+
+		oDiv.onmousedown = function(ev) {
+			var evt = ev || window.event;
+			
+			var temp = document.createElement('div');
+
+			temp.className = 'temp';
+
+			temp.style.width = this.offsetWidth - 2 + 'px';
+			temp.style.height = this.offsetHeight - 2 + 'px';
+
+			temp.style.left = this.offsetLeft + 'px';
+			temp.style.right = this.offsetTop + 'px';
+
+			document.body.appendChild(temp);
+	
+			disX = evt.clientX - (this.offsetLeft - this.parentNode.scrollLeft);
+			disY = evt.clientY - (this.offsetTop - this.parentNode.scrollTop);
+			if (temp.setCapture)
+			{
+				temp.setCapture();
+				temp.onmousemove = mousemove;
+				temp.onmouseup = mouseup;
+				return false;
+			} else {
+				document.onmousemove = mousemove;
+				document.onmouseup = mouseup;
+			}
+			function mousemove(ev) {
+				var evt = ev || window.event;
+				
+				var l = evt.clientX - disX;
+				var t = evt.clientY - disY;
+
+				if (l<0) {
+					l = 0;
+				} else if (l>Width - temp.offsetWidth) {
+					// 父元素的可视宽度小于 元素的宽度会导致BUG（设计师会那么无聊吗？）
+					l = Width - temp.offsetWidth;
+
+				}
+
+				if(t<0) {
+					t = 0;
+				} else if (t>Height - temp.offsetHeight) {
+					// 同上
+					t = Height - temp.offsetHeight;
+				}
+
+				temp.style.left = l  + 'px';
+				temp.style.top = t  + 'px';
+			}
+			function mouseup() {
+				this.onmousemove = null;
+				this.onmouseup = null;
+
+				oDiv.style.left = temp.offsetLeft + 'px';
+				oDiv.style.top = temp.offsetTop + 'px';
+				document.body.removeChild(temp);
+				
+				if(this.setCaputa) {
+					this.releaseCapture();
+				}
+			}
+		};
+		
+	};
+	</script>
+</head>
+<body>
+
+	<div id='follow'>
+		
+	</div>
+
+</body>
+</html>

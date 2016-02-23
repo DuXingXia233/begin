@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>table</title>
+	
+	<style>
+		.left {
+			float: left;
+			width: 500px;
+			margin-left:50px;
+		}
+		.right {
+			float: right;
+			width: 400px;
+	
+	
+			right: 150px;
+			text-align:center;
+		}
+
+		.odd {
+			color: #fff;
+			background-color: #000;
+		}
+		.even {
+			color: #000;
+			background-color: #ccc;
+		}
+
+		.over {
+			color: #acb;
+			background-color: green;
+		}
+		.chosen {
+			color: green;
+			background-color: #ff00ff;
+		}
+		form {
+			text-align:left;
+			margin: 30px;
+		}
+	</style>
+
+	<script type="text/javascript" src="js/table.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+</head>
+<body>
+<div class="right">
+
+	<form id="new" method="get"  action="">
+		<h4>添加元素</h4>
+		Race:<input type="text"><br/>
+		Name:<input type="text"><br/>
+		Branch:<input type="text"><br/>
+		<input type="button" value="add">
+	</form>
+	<form id="search"  method='get' action="">
+		<h4>搜索</h4>
+		Name:<input type="text"  /><input type="button" value="Look up for some guys?">	
+	</form>
+	<form id='order' method='get' action="">
+		<h4>倒序排列</h4>
+		<input type="button" value='Start order' />
+	</form>
+</div>
+<div class='left'>
+	<table id="SC">
+	<thead>
+		<tr>
+			<td>ID</td>
+			<td>Race</td>
+			<td>Name</td>
+			<td>Branch</td>
+			<td>Action</td>
+		</tr>
+	</thead>
+	
+	<tbody>
+		<tr>
+			<td>1</td>
+			<td>Terran/Zerg</td>
+			<td>Sarah Kerrigan</td>
+			<td>Ghost</td>
+			<td><a href="#">删除</a></td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>Terran</td>
+			<td>Jim Ramnor</td>
+			<td>securtiy</td>
+			<td><a href="#">删除</a></td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>Protess</td>
+			<td>Rzszagal</td>
+			<td>Corsair</td>
+			<td><a href="#">删除</a></td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td>Protess</td>
+			<td>Zeratul</td>
+			<td>Dark Templar</td>
+			<td><a href="#">删除</a></td>
+		</tr>
+		<tr>
+			<td>5</td>
+			<td>???</td>
+			<td>Duran</td>
+			<td>Ghost</td>
+			<td><a href="#">删除</a></td>
+		</tr>
+		<tr>
+			<td>6</td>
+			<td>Protess</td>
+			<td>Fenix</td>
+			<td>Dragon</td>
+			<td><a href="#">删除</a></td>
+		</tr>
+		<tr>
+			<td>7</td>
+			<td>Protess</td>
+			<td>Tassadar</td>
+			<td>Templar</td>
+			<td><a href="#">删除</a></td>
+		</tr>
+		<tr>
+			<td>8</td>
+			<td>Terran/Zerg</td>
+			<td>Alexei Stukov</td>
+			<td>Ghost</td>
+			<td><a href="#">删除</a></td>
+		</tr>
+		<tr>
+			<td>9</td>
+			<td>Terran</td>
+			<td>Genard DuGalle</td>
+			<td>Battlecruiser</td>
+			<td><a href="#">删除</a></td>
+		</tr>
+		<tr>
+			<td>10</td>
+			<td>Terran</td>
+			<td>Edmund Duke</td>
+			<td>Tank</td>
+			<td><a href="#">删除</a></td>
+		</tr>
+	</tbody>
+	</table>
+</div>
+	
+<script>
+Table("SC", "new", 'search', 'order');
+</script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>move_change IMG in turn</title>
+	<link rel="stylesheet" href="css/yahoo reSet.css" />
+<style>
+	.play {
+		width:  400px;
+		height: 430px;
+		margin: 50px auto;
+		background-color: #999;
+		font: 12px Arial;
+	}
+	.big_pic {
+		width: 400px;
+		height: 320px;
+		overflow: hidden;
+		border-bottom: 1px solid #ccc;
+		background-color: #222;
+		position: relative;
+	}
+	.big_pic li {
+		width: 400px;
+		height: 320px;
+		overflow: hidden;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 0;
+		background: url() no-repeat center center;
+	}
+	.mark_left {
+		width: 200px;
+		height: 320px;
+		position: absolute;
+		left: 0;
+		top: 0;
+		background-color: red;
+		filter: alpha(opacity: 0);
+		opacity: 0;
+		z-index: 300;
+	}
+	.mark_right {
+		width: 200px;
+		height: 320px;
+		position: absolute;
+		left: 200px;
+		top: 0;
+		background-color: green;
+		filter: alpha(opacity: 0);
+		opacity: 0;
+		z-index: 300;
+	}
+	.prev {
+		border: 30px solid transparent;
+		border-right-color: white;
+		
+		position: absolute;
+		top: 130px;
+		left: 10px;
+		filter: lapha(opacity: 0);
+		opacity: 0;
+		z-index: 301;
+	}
+	.next {
+		border: 30px solid transparent;
+		border-left-color: white;
+		
+		position: absolute;
+		top: 130px;
+		right: 10px;
+		filter: lapha(opacity: 0);
+		opacity: 0;
+		z-index: 301;
+	}
+	.text {
+		color: #ccc;
+		position:absolute;
+		left: 10px;
+		top: 302px;
+		z-index: 300;
+	}
+	.bg {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 400px;
+		height: 25px;
+		background-color: #000;
+		filter:alpha(opacity:60);
+		opacity: 0.6;
+		z-index: 299;
+	}
+	.small_pic {
+		position: relative;
+		top: 7px;
+		left: 10px;
+		width: 380px;
+		height: 94px;
+		overflow: hidden;
+	}
+	.small_pic ul {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 94px;
+
+	}
+	.small_pic li {
+		width: 120px;
+		height: 94px;
+		padding-right: 10px;
+		float: left;
+		filter: alpha(opacity:30);
+		opacity: 0.3;
+	}
+	.small_pic li div {
+		width:120px;
+		height:94px;
+	}
+</style>
+
+<script type='text/javascript' src='js/common.js'></script>
+<script>
+	window.onload = function() {
+		var oDiv = document.getElementById('playimage'); 
+			var oMarkLeft = getByClass(oDiv, 'mark_left')[0];
+			var oMarkRight =getByClass(oDiv, 'mark_right')[0];
+			var oBtnPrev = getByClass(oDiv, 'prev')[0];
+			var oBtnNext = getByClass(oDiv, 'next')[0];
+
+			var oUlBig = getByClass(oDiv, 'big_pic')[0];
+			var aLiBig = oUlBig.getElementsByTagName('li');
+
+			var oDivSmall = getByClass(oDiv, 'small_pic')[0];
+			var oUlSmall = oDivSmall.getElementsByTagName('ul')[0];
+			var aLiSmall = oDivSmall.getElementsByTagName('li');
+
+			var nowZ_index = 2;
+			var now = 0;
+			
+			move(oUlSmall, {width: aLiSmall.length*aLiSmall[0].offsetWidth});
+			function tab() {
+
+				aLiBig[now].style.zIndex = nowZ_index++;
+
+				for (var i=0; i<aLiSmall.length; i++) {
+					move(aLiSmall[i],{opacity: 30});
+				}
+				move(aLiSmall[now], {opacity: 100});
+
+				aLiBig[now].style.height = 0;
+				move(aLiBig[now], {height: 320});
+				if (now === 0) {
+					move(oUlSmall,  {left: 0});
+				} else if (now === aLiSmall.length-1) {
+					move(oUlSmall, {left: -(now-2)*aLiSmall[0].offsetWidth});
+				} else {
+					move(oUlSmall, {left: -(now-1)*aLiSmall[0].offsetWidth});
+				}
+			}
+
+			for (var i=0; i<aLiSmall.length; i++) {
+				aLiSmall[i].index = i;
+				aLiSmall[i].onclick = function () {
+					if (now === this.index) {
+						return ;
+					} else {
+						now = this.index;
+						
+						tab();
+					}
+				};
+				aLiSmall[i].onmouseover = function() {
+					move(this, {opacity: 100});
+				};
+				aLiSmall[i].onmouseout = function() {
+					if (this.index != now) {
+						move(this, {opacity: 30});
+					}
+				};
+			}
+
+			oBtnPrev.onmouseover = oMarkLeft.onmouseover = function (){
+				move(oBtnPrev, {opacity: 100});
+			};
+			oBtnPrev.onmouseout = oMarkLeft.onmouseout = function (){
+				move(oBtnPrev, {opacity: 0});	
+			};
+
+			oBtnNext.onmouseover = oMarkRight.onmouseover = function (){
+				move(oBtnNext, {opacity: 100});
+			};
+			oBtnNext.onmouseout = oMarkRight.onmouseout = function (){
+				move(oBtnNext, {opacity: 0});
+			};
+
+			oBtnPrev.onclick = oMarkLeft.onclick = function (){
+				now--;
+				if (now === -1) {
+					now = aLiSmall.length-1;
+				}
+				tab();
+				return false;
+			};
+			oBtnNext.onclick = oMarkRight.onclick = function (){
+				now++;
+				if (now === aLiSmall.length) {
+					now = 0;
+				}
+				tab();
+				return false;
+			};
+
+			var timer = setInterval(oBtnNext.onclick,5000);
+			oDiv.onmouseout = function() {
+				timer = setInterval(oBtnNext.onclick,5000);
+			};
+			oDiv.onmouseover = function() {
+				clearInterval(timer);
+			};
+
+	};
+</script>
+</head>
+<body>
+	<div id="playimage" class="play">
+		<ul class='big_pic'>
+
+			<div class="prev"></div>
+			<div class="next"></div>
+		
+			<div class="text"></div>
+			<div class="length"></div>
+
+			<a href="" class="mark_left" ></a>
+			<a href="" class="mark_right" ></a>
+			<div class="bg"></div>
+
+			<li style='z-index:1; background-color:red'></li>
+			<li style='background-color:orange'></li>
+			<li style='background-color:yellow'></li>
+			<li style='background-color:green'></li>
+			<li style='background-color:blue'></li>
+			<li style='background-color:purple'></li>
+		</ul>
+		<div class="small_pic">
+			<ul>
+				<li style='filter:100; opacity:1' ><div style='background-color: red' src="image/1.jpg" alt=""></div></li>
+				<li><div style='background-color: orange' ></div></li>
+				<li><div style='background-color: yellow' ></div></li>
+				<li><div style='background-color:green'  ></div></li>
+				<li><div style='background-color:blue'></div></li>
+				<li><div style='background-color:purple'  ></div></li>
+			</ul>
+		</div>
+	</div>	
+</body>
+</html>

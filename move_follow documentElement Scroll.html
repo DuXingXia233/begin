@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html >
+<head>
+	<meta charset="UTF-8">
+	<title>follow documentElement Scroll</title>
+	<link rel="stylesheet" href="css/yahoo reSet.css" />
+	<style>
+		.page {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			width: 200px;
+			height: 320px;
+			overflow: hidden;
+		}
+		#but {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			
+			width: 33px;
+			height: 50px;
+			z-index: 202;
+
+			background-color: #112233;
+			opacity: 0.3;
+			filter: alpha(opacity: 30);
+		}
+		#zns_buttom {
+			position: absolute;
+			right: -165px;
+			bottom: 0;
+
+			width: 203px;
+			height: 50px;
+			z-index: 201;
+
+			background-color: #445566;
+			opacity: 0.3;
+			filter: alpha(opacity: 30);
+		}
+		#zns_box {
+			position: absolute;
+			right: 1px;
+			bottom: -315px;
+			
+			width: 200px;
+			height: 265px;
+			padding: 0 0 48px;
+			z-index: 200;
+
+			background-color: #778899;
+			opacity: 0.3;
+			filter: alpha(opacity: 30);
+		}
+		#zns_box a.close{
+			position: absolute;
+			right: 1px;
+			top: 0;
+		}
+
+
+		/**
+		 *
+		 * 左右图片样式
+		 * 
+		 */
+
+
+		.side {
+			position: absolute;
+			top: 0px;
+
+			width: 170px;
+			height: 200px;
+			margin: 0;
+			padding: 0;
+
+			overflow: hidden;
+		}
+		#sideL {
+			left: 0;
+		}
+		#sideR {
+			right: 0;
+		}
+		
+		#sideL div, #sideR div{
+			position: absolute;
+			top: 0;
+
+			width: 150px;
+			height: 200px;
+			margin: 0;
+			padding: 0;
+
+			background-color: orange;
+			border: 1px solid yellow;
+		}
+		#sideL div.left {
+			left: -152px;
+		}
+
+		#sideR div.right {
+			right: -152px;
+		}
+		.side div p {
+			position: absolute;
+			top: 50px;
+
+			height: 100px;
+			width: 20px;
+			line-height: 50px;
+			text-align:center;
+			background-color: blue;
+		}
+		p.left {
+			right: -21px;
+		}
+
+		p.right {
+			left: -21px;
+		}
+	</style>
+	<script type='text/javascript' src='js/move.js'></script>
+	<script type='text/javascript' src='js/common.js'></script>
+	<script>
+		window.onload = function() {
+			var oBut = document.getElementById('but');
+			var oBtm = document.getElementById('zns_buttom');
+			var oBox = document.getElementById('zns_box');
+			var oBox_cl = getByClass(oBox,'close')[0];
+
+			var L = getByClass(document.getElementById('sideL'), 'left')[0];
+			var R = getByClass(document.getElementById('sideR'), 'right')[0];
+
+			oBut.onclick = function () {
+				move(oBtm, {right: 0, opacity: 100}, function() {
+					move(oBox,{bottom: 0, opacity: 100});
+				});
+			};
+			oBox_cl.onclick = function () {
+				move(oBox, {bottom: -315, opacity: 30}, function() {
+					move(oBtm, {right: -165, opacity: 30});
+				});
+				return false;
+			};
+			
+			L.onmouseover = function() {
+				move(this, {left: 0, opacity: 100});
+				console.log(getStyle(R, 'right'));
+			};
+			R.onmouseover = function() {
+				move(this, {right: 0, opacity: 100});
+			};
+
+			L.onmouseout = function() {
+				move(this, {left: -152, opacity: 100});
+			};
+			R.onmouseout = function() {
+				move(this, {right: -152, opacity: 100});
+			};
+		};	
+		window.onscroll = function () {
+	 		var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+			var page = getByClass(document, 'page')[0];
+
+			var L = document.getElementById('sideL');
+			var R = document.getElementById('sideR');
+
+	 		move(page, {top: scrollTop+document.documentElement.clientHeight-page.offsetHeight});
+	 		move(L, {top: parseInt(scrollTop+(document.documentElement.clientHeight-page.offsetHeight)/2)});
+	 		move(R, {top: parseInt(scrollTop+(document.documentElement.clientHeight-page.offsetHeight)/2)});
+		 };
+	</script>
+</head>
+<body>
+	<div id="sideL" class='side'>
+		<div class='left'>
+			<p class='left'>分享</p>
+		</div>
+	</div>
+	<div id="sideR" class='side'>
+		<div class='right'>
+			<p class='right'>分享</p>
+		</div>
+	</div>
+	<div class="page">
+		<div id="zns_box">
+			<a class='close' href="">X</a>
+		</div>
+		<div id="zns_buttom">
+			
+		</div>
+		<div id="but">
+			PUSH ME
+		</div>
+	</div>
+</body>
+</html>

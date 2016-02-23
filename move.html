@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/yahoo reSet.css" />
+
+<style>
+	body {
+		background-color: #666;
+	}
+
+	.nav {
+		position: fixed;
+		top: 0;
+		
+		width: 100%;
+		height: 50px;
+
+		z-index: 1000;
+		background-color: #454545;
+		text-align: left;
+	}
+
+	.nav>* {
+		display: inline-block;
+		margin: 10px 0 0 10px;
+		padding: 0;
+	}
+
+	.nav>p {
+		width: 25%;
+	}
+	.nav>ul {
+		width: 50%;
+		list-style: none;
+	}
+
+	.nav li {
+		display: inline-block;
+		width: 50px;
+	}
+	.display {
+		position: fixed;
+		top: 1px;
+		right: 0;
+
+		height: 48px;
+		width: 48px;
+
+		z-index: 1001;
+		background-color: #545454;
+	}
+
+	.box {
+		width: 1000px;
+		height: 2000px;
+		margin: 50px auto;
+		border: 1px solid #031549;
+
+		text-align: center;
+		position: relative;
+	}
+
+	/*       图片轮播样式       */
+	.play {
+		width:  400px;
+		height: 430px;
+		margin: 50px auto;
+		background-color: #999;
+		font: 12px Arial;
+	}
+	.big_pic {
+		width: 400px;
+		height: 320px;
+		overflow: hidden;
+		border-bottom: 1px solid #ccc;
+		background-color: #222;
+		position: relative;
+	}
+	.big_pic li {
+		width: 400px;
+		height: 320px;
+		overflow: hidden;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 0;
+		background: url() no-repeat center center;
+	}
+	.mark_left {
+		width: 200px;
+		height: 320px;
+		position: absolute;
+		left: 0;
+		top: 0;
+		background-color: red;
+		filter: alpha(opacity: 0);
+		opacity: 0;
+		z-index: 300;
+	}
+	.mark_right {
+		width: 200px;
+		height: 320px;
+		position: absolute;
+		left: 200px;
+		top: 0;
+		background-color: green;
+		filter: alpha(opacity: 0);
+		opacity: 0;
+		z-index: 300;
+	}
+	.prev {
+		width: 60px;
+		height:60px;
+		background: #fff ;
+		position: absolute;
+		top: 130px;
+		left: 10px;
+		filter: lapha(opacity: 0);
+		opacity: 0;
+		z-index: 301;
+	}
+	.next {
+		width: 60px;
+		height:60px;
+		background: #fff;
+		position: absolute;
+		top: 130px;
+		right: 10px;
+		filter: lapha(opacity: 0);
+		opacity: 0;
+		z-index: 301;
+	}
+	.text {
+		color: #ccc;
+		position:absolute;
+		left: 10px;
+		top: 302px;
+		z-index: 300;
+	}
+	.bg {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 400px;
+		height: 25px;
+		background-color: #000;
+		filter:alpha(opacity:60);
+		opacity: 0.6;
+		z-index: 299;
+	}
+	.small_pic {
+		position: relative;
+		top: 7px;
+		left: 10px;
+		width: 380px;
+		height: 94px;
+		overflow: hidden;
+	}
+	.small_pic ul {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 94px;
+
+	}
+	.small_pic li {
+		width: 120px;
+		height: 94px;
+		padding-right: 10px;
+		float: left;
+		filter: alpha(opacity:30);
+		opacity: 0.3;
+	}
+	.small_pic li div {
+		width:120px;
+		height:94px;
+	}
+
+
+	/**
+	 *
+	 *  菜单样式
+	 * 
+	 */
+	.page {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		
+		width: 200px;
+		height: 320px;
+
+		overflow: hidden;
+		z-index:199;
+	}
+	#but {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		
+		width: 33px;
+		height: 50px;
+		z-index: 202;
+
+		background-color: #112233;
+		opacity: 0.3;
+		filter: alpha(opacity: 30);
+	}
+	#zns_buttom {
+		position: absolute;
+		right: -165px;
+		bottom: 0;
+
+		width: 203px;
+		height: 50px;
+		z-index: 201;
+
+		background-color: #445566;
+		opacity: 0.3;
+		filter: alpha(opacity: 30);
+	}
+	#zns_box {
+		position: absolute;
+		right: 1px;
+		bottom: -315px;
+		
+		width: 200px;
+		height: 265px;
+		padding: 0 0 48px;
+		z-index: 200;
+
+		background-color: #778899;
+		opacity: 0.3;
+		filter: alpha(opacity: 30);
+	}
+	#zns_box a.close{
+		position: absolute;
+		right: 1px;
+		top: 0;
+	}
+
+
+	/**
+	 *
+	 * 左右图片样式
+	 * 
+	 */
+
+
+	.side {
+		position: absolute;
+		top: 0px;
+
+		width: 170px;
+		height: 200px;
+		margin: 0;
+		padding: 0;
+
+		overflow: hidden;
+	}
+	#sideL {
+		left: 0;
+	}
+	#sideR {
+		right: 0;
+	}
+	
+	#sideL div, #sideR div{
+		position: absolute;
+		top: 0;
+
+		width: 150px;
+		height: 200px;
+		margin: 0;
+		padding: 0;
+
+		background-color: orange;
+		border: 1px solid yellow;
+		z-index: 200;
+		opacity: 0.3;
+		filter: alpha(opacity:30);
+	}
+	#sideL div.left {
+		left: -152px;
+	}
+
+	#sideR div.right {
+		right: -152px;
+	}
+	.side div p {
+		position: absolute;
+		top: 50px;
+
+		height: 100px;
+		width: 20px;
+		line-height: 50px;
+		text-align:center;
+		background-color: blue;
+	}
+	p.left {
+		right: -21px;
+	}
+
+	p.right {
+		left: -21px;
+	}
+</style>
+<script type='text/javascript' src='js/move.js'></script>
+<script>
+	window.onload=function() {
+		var oDiv = document.getElementById('playimage'); 
+		var oMarkLeft = getByClass(oDiv, 'mark_left')[0];
+		var oMarkRight =getByClass(oDiv, 'mark_right')[0];
+		var oBtnPrev = getByClass(oDiv, 'prev')[0];
+		var oBtnNext = getByClass(oDiv, 'next')[0];
+
+		var oUlBig = getByClass(oDiv, 'big_pic')[0];
+		var aLiBig = oUlBig.getElementsByTagName('li');
+
+		var oDivSmall = getByClass(oDiv, 'small_pic')[0];
+		var oUlSmall = oDivSmall.getElementsByTagName('ul')[0];
+		var aLiSmall = oDivSmall.getElementsByTagName('li');
+
+		var nowZ_index = 2;
+		var now = 0;
+
+		var oBut = document.getElementById('but');
+		var oBtm = document.getElementById('zns_buttom');
+		var oBox = document.getElementById('zns_box');
+		var oBox_cl = getByClass(oBox,'close')[0];
+
+		var L = getByClass(document.getElementById('sideL'), 'left')[0];
+		var R = getByClass(document.getElementById('sideR'), 'right')[0];
+
+		move(oUlSmall, {width: aLiSmall.length*aLiSmall[0].offsetWidth});
+
+		function tab() {
+
+			aLiBig[now].style.zIndex = nowZ_index++;
+
+			for (var i=0; i<aLiSmall.length; i++) {
+				move(aLiSmall[i],{opacity: 30});
+			}
+			move(aLiSmall[now], {opacity: 100});
+
+			aLiBig[now].style.height = 0;
+			move(aLiBig[now], {height: 320});
+			if (now === 0) {
+				move(oUlSmall,  {left: 0});
+			} else if (now === aLiSmall.length-1) {
+				move(oUlSmall, {left: -(now-2)*aLiSmall[0].offsetWidth});
+			} else {
+				move(oUlSmall, {left: -(now-1)*aLiSmall[0].offsetWidth});
+			}
+		}
+
+		for (var i=0; i<aLiSmall.length; i++) {
+			aLiSmall[i].index = i;
+			aLiSmall[i].onclick = function () {
+				if (now === this.index) {
+					return ;
+				} else {
+					now = this.index;
+					
+					tab();
+				}
+			};
+			aLiSmall[i].onmouseover = function() {
+				move(this, {opacity: 100});
+			};
+			aLiSmall[i].onmouseout = function() {
+				if (this.index != now) {
+					move(this, {opacity: 30});
+				}
+			};
+		}
+
+		oBtnPrev.onmouseover = oMarkLeft.onmouseover = function (){
+			move(oBtnPrev, {opacity: 100});
+		};
+		oBtnPrev.onmouseout = oMarkLeft.onmouseout = function (){
+			move(oBtnPrev, {opacity: 0});	
+		};
+
+		oBtnNext.onmouseover = oMarkRight.onmouseover = function (){
+			move(oBtnNext, {opacity: 100});
+		};
+		oBtnNext.onmouseout = oMarkRight.onmouseout = function (){
+			move(oBtnNext, {opacity: 0});
+		};
+
+		oBtnPrev.onclick = oMarkLeft.onclick = function (){
+			now--;
+			if (now === -1) {
+				now = aLiSmall.length-1;
+			}
+			tab();
+			return false;
+		};
+		oBtnNext.onclick = oMarkRight.onclick = function (){
+			now++;
+			if (now === aLiSmall.length) {
+				now = 0;
+			}
+			tab();
+			return false;
+		};
+
+		oBut.onclick = function () {
+			move(oBtm, {right: 0, opacity: 100}, function() {
+				move(oBox,{bottom: 0, opacity: 100});
+			});
+		};
+		oBox_cl.onclick = function () {
+			move(oBox, {bottom: -315, opacity: 30}, function() {
+				move(oBtm, {right: -165, opacity: 30});
+			});
+			return false;
+		};
+	
+		L.onmouseover = function() {
+			move(this, {left: 0, opacity: 100});
+			console.dir(R);
+		};
+		R.onmouseover = function() {
+			move(R, {right: 0, opacity: 100});
+		};
+
+		L.onmouseout = function() {
+			move(this, {left: -152, opacity: 30});
+		};
+		R.onmouseout = function() {
+			move(R, {right: -152, opacity: 30});
+		};
+
+	};
+	window.onscroll = function () {
+ 		var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+		var page = getByClass(document, 'page')[0];
+
+		var L = document.getElementById('sideL');
+		var R = document.getElementById('sideR');
+
+ 		move(page, {top: scrollTop+document.documentElement.clientHeight-page.offsetHeight});
+ 		move(L, {top: parseInt(scrollTop+(document.documentElement.clientHeight-page.offsetHeight)/2)});
+ 		move(R, {top: parseInt(scrollTop+(document.documentElement.clientHeight-page.offsetHeight)/2)});
+	 };
+
+	
+</script>
+</head>
+<body>
+	<div class='nav'>
+		<p style='display:none'>Welcome</p>
+		<p><span><a class='LogIn'href="#">登录</a></span> || <span><a class='SignUp' href="#">注册</a></span></p>
+		<ul class='function'>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+			<li>6</li>
+		</ul>
+	</div>
+	<div class='display'><a href=""><img src="" alt=""></a></div>
+	<div class='box'>
+		<div id="playimage" class="play">
+			<ul class='big_pic'>
+
+				<div class="prev"></div>
+				<div class="next"></div>
+			
+				<div class="text"></div>
+				<div class="length"></div>
+
+				<a href="" class="mark_left" href=''></a>
+				<a href="" class="mark_right" href=''></a>
+				<div class="bg"></div>
+
+				<li style='z-index:1; background-color:red'></li>
+				<li style='background-color:orange'></li>
+				<li style='background-color:yellow'></li>
+				<li style='background-color:green'></li>
+				<li style='background-color:blue'></li>
+				<li style='background-color:purple'></li>
+			</ul>
+			<div class="small_pic">
+				<ul>
+					<li style='filter:100; opacity:1'><div style='background-color: red' src="image/1.jpg" alt=""></div></li>
+					<li><div style='background-color: orange' ></div></li>
+					<li><div style='background-color: yellow' ></div></li>
+					<li><div style='background-color:green'  ></div></li>
+					<li><div style='background-color:blue'></div></li>
+					<li><div style='background-color:purple'  ></div></li>
+				</ul>
+			</div>
+		</div>	
+	</div>	
+	<div id="sideL" class='side'>
+		<div class='left'>
+			<p class='left'>分享</p>
+		</div>
+	</div>
+	<div id="sideR" class='side'>
+		<div class='right'>
+			<p class='right'>分享</p>
+		</div>
+	</div>
+	<div class="page">
+		<div id="zns_box">
+			<a class='close' href="">X</a>
+		</div>
+		<div id="zns_buttom">
+			
+		</div>
+		<div id="but">
+			PUSH ME
+		</div>
+	</div>
+</body>
+</html>

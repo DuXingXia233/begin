@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>custom scroll bar</title>
+	<link rel="stylesheet" href="css/yahoo.reSet.css">
+<style>
+	#div1 {
+		position: absolute;
+		left: 0;
+		top: 50px;
+		width: 600px;
+		height:500px;
+
+		background-color: purple;
+		border: 1px solid #000;
+		overflow: hidden;
+	}
+	#div2 {
+		position: absolute;
+		top: 0;
+		left: 10;
+
+		width: 500px;
+
+		border: 1px solid blue;
+		overflow: hidden;
+	}
+
+	#div3 {
+		position: absolute;
+		top: 30px;
+		right: 10px;
+	
+		width: 30px;
+		height: 440px;
+		background-color: #ccc;
+	}
+	#div3 div {
+		position: absolute;
+		
+		width: 30px;
+		height: 20px;
+		background-color: orange;
+	}
+</style>
+<script>
+	window.onload = function() {
+		function $ (id) {
+			return document.getElementById(id);
+		}
+
+		var a = $('div1');
+		var b = $('div2');
+		var c = $('div3');
+
+		var adiv = c.getElementsByTagName('div');
+		adiv[0].style.top = -adiv[0].offsetHeight - 5 + 'px';
+		adiv[2].style.top = c.offsetHeight + 5 +'px';
+
+		var l = c.offsetHeight - adiv[1].offsetHeight;
+
+		var percent = 0;
+
+		adiv[1].onmousedown = function(ev) {
+			var evt = ev || window.event;
+	
+			disY = evt.clientY - (this.offsetTop - this.parentNode.scrollTop);
+			if (this.setCapture) {
+				this.setCapture();
+				this.onmousemove = mousemove;
+				this.onmouseup = mouseup;
+				return false;
+			} else {
+				document.onmousemove = mousemove;
+				document.onmouseup = mouseup;
+				return false;
+			}
+		};
+		function mousemove(ev) {
+			var evt = ev || window.event;
+			
+			var t = evt.clientY - disY;
+
+
+
+			if(t<0) {
+				t = 0;
+			} else if (t>this.parentNode.clientHeight - this.offsetHeight) {
+				// 同上
+				t = this.parentNode.clientHeight - this.offsetHeight;
+			}
+			percent = t/l;
+			adiv[1].style.top = t + this.parentNode.scrollTop + 'px';
+			b.style.top = -(b.offsetHeight-b.parentNode.clientHeight)*percent +'px';
+		}
+		function mouseup() {
+			this.onmousemove = null;
+			this.onmouseup = null;
+			
+			if(this.releaseCapture) {
+				this.releaseCapture();
+			}
+		}
+
+
+	};
+</script>
+</head>
+<body>
+	<div id="div1">
+		<div id="div2">
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+		<li>6</li>
+		<li>7</li>
+		<li>8</li>
+		<li>9</li>
+		<li>10</li>
+		<li>11</li>
+		<li>12</li>
+		<li>13</li>
+		<li>14</li>
+		<li>15</li>
+		<li>16</li>
+		<li>17</li>
+		<li>18</li>
+		<li>19</li>
+		<li>20</li>
+		<li>21</li>
+		<li>22</li>
+		<li>23</li>
+		<li>24</li>
+		<li>25</li>
+		<li>26</li>
+		<li>27</li>
+		<li>28</li>
+		<li>29</li>
+		<li>30</li>
+		<li>31</li>
+		<li>32</li>
+		<li>33</li>
+		<li>34</li>
+		<li>35</li>
+		<li>36</li>
+		<li>37</li>
+		<li>38</li>
+		<li>39</li>
+		<li>40</li>
+		<li>41</li>
+		<li>42</li>
+		<li>43</li>
+		<li>44</li>
+		<li>45</li>
+		<li>46</li>
+		<li>47</li>
+		<li>48</li>
+		<li>49</li>
+		<li>50</li>
+		<li>51</li>
+		<li>52</li>
+		<li>53</li>
+		<li>54</li>
+		<li>55</li>
+		<li>56</li>
+		<li>57</li>
+		<li>58</li>
+		<li>59</li>
+		<li>60</li>
+		<li>61</li>
+		<li>62</li>
+		<li>63</li>
+		<li>64</li>
+		<li>65</li>
+		<li>66</li>
+		<li>67</li>
+		<li>68</li>
+		<li>69</li>
+		<li>70</li>
+		<li>71</li>
+		<li>72</li>
+		<li>73</li>
+		<li>74</li>
+		<li>75</li>
+		<li>76</li>
+		<li>77</li>
+		<li>78</li>
+		<li>79</li>
+		<li>80</li>
+		<li>81</li>
+		<li>82</li>
+		<li>83</li>
+		<li>84</li>
+		<li>85</li>
+		<li>86</li>
+		<li>87</li>
+		<li>88</li>
+		<li>89</li>
+		<li>90</li>
+		<li>91</li>
+		<li>92</li>
+		<li>93</li>
+		<li>94</li>
+		<li>95</li>
+		<li>96</li>
+		<li>97</li>
+		<li>98</li>
+		<li>99</li>
+		</div>
+
+		<div id="div3">
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+	</div>
+</body>
+</html>

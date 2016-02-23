@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>旋转木马</title>
+	<link rel="stylesheet" href="css/yahoo reSet.css">
+	
+<style>
+
+	.play {
+		position: relative;
+
+		width: 800px;
+		height: 270px;
+
+		margin:10px;
+		background-color: #ccc;
+	}
+
+	.play .prev, .play .next {
+		position: absolute;
+		top: 0;
+		
+		width: 100px;
+		height: 270px;
+
+		z-index: 100;
+		cursor: pointer;
+		text-decoration: none;
+		opacity: 0;
+		filter: alpha(opacity: 0);
+	}
+
+	.play .prev {
+		left: 0;
+		background: url('img/btn_l.png') no-repeat center center;
+	}
+	.play .next {
+		right: 0;
+		background: url('img/btn_r.png') no-repeat center center;
+	}
+	.play>ul {
+		width: 800px;
+		height: 270px;
+	}
+	.play li {
+		position: absolute;
+		top: 0;
+		
+		width: 640px;
+		height: 270px;
+	}
+
+</style>
+
+<script type='text/javascript' src='js/carousel.js'></script>
+</head>
+<body>
+	<div class='context'>
+		<div class='play carousel' data-setting='{
+												"width": 1000,
+												"height": 270,
+												"pictureW": 640,
+												"pictureH": 270,
+												"scale": 0.8,
+												"speed": 500,
+												"autoPlay": true,
+												"verticalAlign": "middle"
+												}'>
+			<a class='prev' ></a>
+			<a class='next' ></a>
+			
+			<ul class='play-list'>
+				<li class='play-item' style='background-color: red'><a ><img src="" alt=""></a></li>
+				<li class='play-item' style='background-color: orange'><a ><img src="" alt=""></a></li>
+				<li class='play-item' style='background-color: yellow'><a ><img src="" alt=""></a></li>
+				<li class='play-item' style='background-color: green'><a ><img src="" alt=""></a></li>
+				<li class='play-item' style='background-color: blue'><a ><img src="" alt=""></a></li>
+				<li class='play-item' style='background-color: grey'><a ><img src="" alt=""></a></li>
+				<li class='play-item' style='background-color: purple'><a ><img src="" alt=""></a></li>
+				<li class='play-item' style='background-color: white'><a ><img src="" alt=""></a></li>
+				<li class='play-item' style='background-color: black'><a ><img src="" alt=""></a></li>
+			</ul>
+		</div>
+		
+		
+	</div>
+</body>
+</html>

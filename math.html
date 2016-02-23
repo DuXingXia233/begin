@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+	var zero = function (f) {
+		return function  (x) {
+			return x;
+		};
+	};
+	var one = function (f) {
+		return function (x) {
+			return f(x);
+		};
+	};
+
+	function add(fn, fm) {
+		return function (f) {
+			return function (x) {
+				return fm(f)(fn(f)(x));
+			};
+		};
+	}
+
+	var two = add(one, one),
+		three = add(two, one),
+		five = add(two, three);
+
+	console.log(two);
+
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>move_follow Keycode</title>
+	<link rel="stylesheet" href="css/yahoo.reSet.css">
+	<style>
+
+		div {
+			position: absolute;
+			border-radius: 100px;
+			border: 1px solid yellow;
+			height: 100px;
+			width: 100px;
+			background-color: blue;
+		}
+	</style>
+<script>
+	function KeyControl(obj) {
+		this.obj = obj;
+		this.key = {
+			up: false,
+			down: false,
+			left: false,
+			right: false
+		};
+		this.timer = null;
+
+	}
+
+	KeyControl.prototype = {
+		constructor: KeyControl,
+
+		keyStatusChange: function(event, status) {
+			evnet = event || window.event;
+
+			var code = event.keyCode || event.which;
+			var key,timer = false;
+
+			switch (code) {
+				case 37:
+				  this.key['left'] = status;
+				  break;
+				case 38:
+				  this.key['up'] = status;
+				  break;
+				case 39:
+				  this.key['right'] = status;
+				  break;
+				case 40:
+				  this.key['down'] = status;
+			}
+
+			for (key in this.key) {
+				if (this.key[key]) {
+					timer = true;
+				}
+			}
+
+			if (timer) {
+				if (!this.timer) {
+					this.active();
+				}
+				
+			} else {
+				if (this.timer) {
+					clearInterval(this.timer); 
+					this.timer = null;
+				}
+			}
+
+		},
+
+		active: function() {
+			var that = this;
+			this.timer = setInterval(function(){
+				
+				if (that.key.left) {
+					that.obj.style.left = that.obj.offsetLeft - 10 + 'px';
+				} else if (that.key.right) {
+					that.obj.style.left = that.obj.offsetLeft + 10 + 'px';
+				}
+
+				if (that.key.up) {
+					that.obj.style.top = that.obj.offsetTop - 10 + 'px';
+				} else if (that.key.down) {
+					that.obj.style.top = that.obj.offsetTop + 10 + 'px';
+				}
+				
+				// 防止超出页面
+				that.limt();
+			} ,30);
+		},
+
+		limt: function() {
+			var obj = this.obj;
+			var current =[document.documentElement.clientWidth, document.documentElement.clientHeight];
+
+			obj.style.left = obj.offsetLeft < 0 ? (0+ 'px') : obj.offsetLeft < current[0]-obj.offsetWidth? (obj.offsetLeft + 'px') : (current[0]-obj.offsetWidth + 'px');
+
+			obj.style.top = obj.offsetTop < 0 ? (0+ 'px') : obj.offsetTop < current[1]-obj.offsetHeight? (obj.offsetTop + 'px') : (current[1]-obj.offsetHeight + 'px');
+
+			console.log(current + '\t' + obj.offsetTop);
+		}
+	};
+	window.onload = function() {
+		var go = new KeyControl(document.getElementById('go'));
+		
+
+		document.onkeydown = function(ev) {
+			go.keyStatusChange(ev, true);
+		};
+			
+		document.onkeyup = function(ev) {
+			go.keyStatusChange(ev, false);
+		};
+
+		
+	};
+</script>
+</head>
+<body>
+	<div id='go'></div>
+</body>
+</html>
